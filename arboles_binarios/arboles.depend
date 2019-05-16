@@ -1,0 +1,37 @@
+# depslib dependency file v1.0
+1557600862 source:c:\users\luis\desktop\arboles\arboles\main.cpp
+	<cstdlib>
+	<iostream>
+	"clases.cpp"
+
+1557601574 source:c:\users\luis\desktop\arboles\arboles\clases.cpp
+	<cstdlib>
+	<iostream>
+
+1557601574 source:c:\users\luis\desktop\arboles\arboles\funciones.cpp
+	<cstdlib>
+	<iostream>
+	"clases.cpp"
+
+1557601574 c:\users\luis\desktop\arboles\arboles\clases.cpp
+	<cstdlib>
+	<iostream>
+
+1557957837 source:c:\users\luis\desktop\github\arboles_binarios\clases.cpp
+	<cstdlib>
+	<iostream>
+
+1557960381 source:c:\users\luis\desktop\github\arboles_binarios\funciones.cpp
+	<cstdlib>
+	<iostream>
+	"clases.cpp"
+
+1557957837 c:\users\luis\desktop\github\arboles_binarios\clases.cpp
+	<cstdlib>
+	<iostream>
+
+1557960488 source:c:\users\luis\desktop\github\arboles_binarios\main.cpp
+	<cstdlib>
+	<iostream>
+	"clases.cpp"
+
