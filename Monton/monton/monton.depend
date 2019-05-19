@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1557970307 source:c:\users\luis\desktop\monton\monton\main.cpp
+	<iostream>
+	<cstdlib>
+	"clases.h"
+
+1558288829 c:\users\luis\desktop\monton\monton\clases.h
+
+1557970281 source:c:\users\luis\desktop\monton\monton\funciones.cpp
+	<iostream>
+	<cstdlib>
+	"clases.h"
+

@@ -1,0 +1,298 @@
+#include <iostream>
+#include <cstdlib>
+#include "clases.h"
+
+using namespace std;
+
+
+//-------------------------------------------
+monton::monton(){
+    raiz = NULL;
+    principio = NULL;
+    Final = NULL;
+    donde = NULL;
+    encontrado = NO;
+}
+//------------------------------------------
+monton::~monton(){
+
+    nodo *p;
+
+    while(principio){
+        p = principio;
+        principio = p->siguiente;
+        delete p;
+
+    }
+        raiz = NULL;
+        principio = NULL;
+        Final = NULL;
+        donde = NULL;
+        encontrado = NO;
+}
+//-------------------------------------------------
+void monton::agregar(int a){
+
+    nodo *p;
+    p = new nodo;
+    p->valor = a;
+    p->h_izq = NULL;
+    p ->h_der = NULL;
+
+    if(raiz == NULL){
+        raiz = p;
+        principio = p;
+        donde = p;
+        Final = p;
+        como = H_IZQ;
+        return;
+    }
+    else if(como == H_IZQ){
+        donde->h_izq = p;
+        p->padre = donde;
+        como = H_DER;
+    }
+    else{
+        donde->h_der = p;
+        p->padre = donde;
+        como = H_IZQ;
+        donde = donde->siguiente;
+    }
+    //Agregamos a la lista ordenada
+    p->anterior = Final;
+    Final->siguiente = p;
+    p->siguiente = NULL;
+    Final = p;
+    subir(p);
+}
+//-----------------------------------------------------
+void monton::subir(nodo *p){
+
+    while(p->padre!=NULL && (p->valor < (p->padre)->valor)){
+        intercambiar(p, p->padre);
+    }
+}
+//-----------------------------------------------------------
+void monton::bajar(nodo *p){
+    nodo *q;
+
+    while(p->h_der !=NULL || p->h_izq!=NULL){
+
+            if(p->h_der!=NULL && p->h_izq == NULL){
+
+                q =p->h_der;
+            }
+            else if(p->h_der ==NULL && p->h_izq !=NULL){
+                q = p->h_izq;
+            }
+
+            else{
+                if((p->h_der)->valor < (p->h_izq)->valor){
+                    q = p->h_der;
+                }
+                else{
+                    q = p->h_izq;
+                }
+                if(p->valor < q->valor){
+                    return;
+                }
+                else{
+                    intercambiar(p,q);
+                }
+            }
+        }
+        return;
+}
+//-------------------------------------------------------------
+void monton::intercambiar(nodo *p, nodo *q){
+
+    nodo *r;
+
+    //Codigo intercambiar del arbol binario
+    if(q->padre == p){          //Caso en el que los nodos están juntos
+        if(p->h_der == q){
+            q->h_der = p;
+            p->padre = q;
+        }
+        else{
+            q->h_izq = p;
+            p->padre = q;
+        }
+        if(q->padre == NULL){
+            raiz = q;
+        }
+    }
+    else if(p->padre == q){     //Otro caso en el que los nodos están juntos
+        if(q->h_der == p){
+            p->h_der = q;
+            q->padre = p;
+        }
+        else{
+            p->h_izq = q;
+            q->padre = p;
+        }
+        if(p->padre == NULL){
+            raiz = p;
+        }
+    }
+    else{                   //Los casos en los que los nodos no están juntos
+        nodo *r;
+
+        r = p->padre;
+        q->padre = r;
+        donde = p->padre;
+
+        r = p->h_der;
+        p->h_der = q->h_der;
+        q->h_der = r;
+
+        r = p->h_izq;
+        p->h_izq = q->h_izq;
+        q->h_izq = r;
+
+        if(q->padre == NULL){
+            raiz = q;
+        }
+        else{
+            if((q->padre)->h_der == p){
+                (q->padre)->h_der = q;
+            }
+            else{
+                (q->padre)->h_izq = q;
+            }
+        }
+        if(p->padre == NULL){
+            raiz = p;
+        }
+        else{
+            if((p->padre)->h_der == q){
+                (p->padre)->h_der = p;
+                como = H_DER;
+            }
+            else{
+                (p->padre)->h_izq = p;
+                como = H_IZQ;
+            }
+        }
+        if(q->h_der !=NULL){
+            (q->h_der)->padre = q;
+        }
+        if(q->h_izq !=NULL){
+            (q->h_izq)->padre = q;
+        }
+        if(p->h_der != NULL){
+            (p->h_der)->padre = p;
+        }
+        if(p->h_izq !=NULL){
+            (p->h_izq)->padre = p;
+        }
+    }
+    //Fin de codigo intercambiar de arbol binario
+
+    //Intercambiamos ahora en la lista doblemente ligada
+    if(p->anterior == q){
+        r = q->anterior;
+        p->anterior = r;
+        q->anterior = p;
+        r = p->siguiente;
+        q->siguiente = r;
+        p->siguiente = p;
+
+        //Checamos los vecinos
+        if(p->anterior == NULL){
+            principio = p;
+        }
+        else{
+            (p->anterior)->siguiente = p;
+        }
+        if(q->siguiente==NULL){
+            Final = q;
+        }
+        else{
+            (q->siguiente)->anterior = q;
+        }
+    }
+    else if(q->anterior == p){
+        //Otro Caso en el que están pegados
+    }
+    else{
+        //Caso general: Los nodos no están juntos
+    }
+
+
+    //Finalmente actualizamos la variable donde
+    if(donde == p){
+        donde = q;
+        return;
+    }
+    if(donde == q){
+        donde = p;
+        return;
+    }
+    return;
+}
+//-------------------------------------------------------
+void monton::pintar(){
+
+    nodo *p;
+    p = raiz;
+
+    while(p){
+        cout << endl << "Nodo: " << p->valor << endl;
+        cout << "Hijo izquierdo: ";
+        if(p->h_izq!=NULL) cout << p->h_izq->valor;
+        else cout << "NULL";
+        cout << endl;
+        cout << "Hijo derecho: ";
+        if(p->h_der!=NULL) cout << p->h_der->valor;
+        else cout << "NULL";
+        cout << endl << endl;
+
+        p = p->siguiente;
+    }
+}
+//----------------------------------------------------------
+int monton::sacar(){
+    nodo *p;
+
+    int valor = 0;
+    if(raiz == NULL) return 0;
+
+    if(principio == Final){
+
+        p = principio;
+        valor = p->valor;
+        principio ->siguiente = NULL;
+        principio =  NULL;
+        Final = NULL;
+        delete p;
+        return valor;
+
+    }
+    else{
+
+        intercambiar(principio, Final);
+        p = Final;
+
+        //Desconectamos del arbol
+        if(como ==H_DER){
+            donde->h_izq=NULL;
+            donde = donde->anterior;
+        }
+        if(como == H_IZQ){
+            donde ->h_der = NULL;
+        }
+        //Terminamos de desconectar del arbol
+
+        //FALTA DESCONECTAR DE LA LISTA LIGADA
+        anterior ->siguiente = NULL;
+        Final = anterior;
+
+
+        delete p;
+        bajar(p);
+        return valor;
+    }
+
+}
+//-------------------------------------------------------------
