@@ -11,7 +11,7 @@ arbol::arbol(){
     Final = NULL;
     donde = NULL;
     encontrado = NO;
-    como = VACIO;
+    como = RAIZ;
 }
 ///////////////////////////////////
 arbol::~arbol(){
@@ -27,12 +27,12 @@ arbol::~arbol(){
     Final = NULL;
     donde = NULL;
     encontrado = NO;
-    como = VACIO;
+    como = RAIZ;
 }
 /////////////////////////////////////
 void arbol::pintar(){
     nodo *p;
-    p = raiz;
+    p = principio;
 
     while(p){
         cout << endl << "Nodo: " << p->valor << endl;
@@ -64,6 +64,7 @@ void arbol::buscar(int a){
             if(p == raiz){
                 donde = NULL;
                 como = RAIZ;
+                return;
             }
             donde = p -> padre;
             if(donde -> h_der == p){
@@ -86,7 +87,7 @@ void arbol::buscar(int a){
                 p = p -> h_izq;
             }
         }
-        if(p -> valor < a){
+        else if(p -> valor < a){
             if(p -> h_der == NULL){
                 encontrado = NO;
                 donde = p;
@@ -102,7 +103,7 @@ void arbol::buscar(int a){
 }
 ///////////////////////////////
 int arbol::agregar(int a){
-     nodo *p;
+    nodo *p;
     buscar(a);
     if(encontrado == SI) return 0;
     p = new nodo;
@@ -110,6 +111,7 @@ int arbol::agregar(int a){
     p -> padre = NULL;
     p -> h_der = NULL;
     p -> h_izq = NULL;
+
     if(como == RAIZ){
         raiz = p;
         p -> padre = NULL;
@@ -121,7 +123,9 @@ int arbol::agregar(int a){
     else{
         donde -> h_izq = p;
         p -> padre = donde;
-    }
+    }//YAESTAENELARBOL
+
+    //LISTA ORDENADA
     if(como == RAIZ){
         p -> anterior = NULL;
         p -> siguiente = NULL;
@@ -143,6 +147,7 @@ int arbol::agregar(int a){
     else{
         p -> siguiente = donde;
         p -> anterior = donde -> anterior;
+        p->siguiente->anterior = p;
 
         if(p -> anterior == NULL){
             principio = p;
@@ -166,12 +171,12 @@ void arbol::borrar1(nodo *p){                                         //Borrar n
             delete p1;
         }
         else if(p1->h_izq == NULL){
-            (p1->h_der)->padre = NULL;
-            raiz = p1->h_der;
-        }
-        else if(p1->h_der== NULL){
             (p1->h_izq)->padre = NULL;
             raiz = p1->h_izq;
+        }
+        else if(p1->h_der== NULL){
+            (p1->h_der)->padre = NULL;
+            raiz = p1->h_der;
         }
     }
     else if(como == H_DER){
@@ -208,16 +213,16 @@ void arbol::borrar1(nodo *p){                                         //Borrar n
             principio = NULL;
             Final = NULL;
         }
-        else if(p1->siguiente == NULL && p1->anterior !=NULL){
+     /*   else if(p1->siguiente == NULL && p1->anterior !=NULL){
             (p1->anterior)->siguiente = NULL;
-            raiz = p1->anterior;
-            p1->anterior = NULL;
+            Final = p1->anterior;
+          //  p1->anterior = NULL;
         }
         else if(p1->siguiente != NULL && p1->anterior == NULL){
             (p1->siguiente)->anterior = NULL;
-            raiz = p1->siguiente;
-            p1->siguiente = NULL;
-        }
+            principio = p1->siguiente;
+          //  p1->siguiente = NULL;
+        }*/
     }
     else if(como == H_DER){
         if(p1->siguiente == NULL){
@@ -284,39 +289,93 @@ int arbol::borrar(int a){
 }
 ////////////////////////////////////
 void arbol::intercambiar(nodo *p, nodo *q){
+    nodo *r;
 
     if(q->padre == p){          //Caso en el que los nodos están juntos
         if(p->h_der == q){
+
+            r = p->padre;
+            p->padre = q->padre;
+            q->padre = r;
+
+            r = p->h_der;
+            p->h_der = q->h_der;
+            q->h_der = r;
+
+            r = p->h_izq;
+            p->h_izq = q->h_izq;
+            q->h_izq = r;
+
             q->h_der = p;
             p->padre = q;
         }
         else{
+
+            r = p->padre;
+            p->padre = q->padre;
+            q->padre = r;
+
+            r = p->h_der;
+            p->h_der = q->h_der;
+            q->h_der = r;
+
+            r = p->h_izq;
+            p->h_izq = q->h_izq;
+            q->h_izq = r;
+
             q->h_izq = p;
             p->padre = q;
         }
-        if(q->padre == NULL){
+        /*if(q->padre == NULL){
             raiz = q;
-        }
+        }*/
     }
     else if(p->padre == q){     //Otro caso en el que los nodos están juntos
         if(q->h_der == p){
+
+            r = p->padre;
+            p->padre = q->padre;
+            q->padre = r;
+
+            r = p->h_der;
+            p->h_der = q->h_der;
+            q->h_der = r;
+
+            r = p->h_izq;
+            p->h_izq = q->h_izq;
+            q->h_izq = r;
+
             p->h_der = q;
             q->padre = p;
         }
         else{
+
+            r = p->padre;
+            p->padre = q->padre;
+            q->padre = r;
+
+            r = p->h_der;
+            p->h_der = q->h_der;
+            q->h_der = r;
+
+            r = p->h_izq;
+            p->h_izq = q->h_izq;
+            q->h_izq = r;
+
+
             p->h_izq = q;
             q->padre = p;
         }
-        if(p->padre == NULL){
+      /*  if(p->padre == NULL){
             raiz = p;
-        }
+        }*/
     }
     else{                   //Los casos en los que los nodos no están juntos
         nodo *r;
 
         r = p->padre;
+        p->padre = q->padre;
         q->padre = r;
-        donde = p->padre;
 
         r = p->h_der;
         p->h_der = q->h_der;
@@ -326,7 +385,9 @@ void arbol::intercambiar(nodo *p, nodo *q){
         p->h_izq = q->h_izq;
         q->h_izq = r;
 
-        if(q->padre == NULL){
+    }
+
+        if(q->padre == NULL){   //Conectar nodo q con su padre
             raiz = q;
         }
         else{
@@ -337,7 +398,7 @@ void arbol::intercambiar(nodo *p, nodo *q){
                 (q->padre)->h_izq = q;
             }
         }
-        if(p->padre == NULL){
+        if(p->padre == NULL){                //Conectar nodo p con su padre
             raiz = p;
         }
         else{
@@ -350,18 +411,19 @@ void arbol::intercambiar(nodo *p, nodo *q){
                 como = H_IZQ;
             }
         }
-        if(q->h_der !=NULL){
+
+
+        if(q->h_der !=NULL){                //Conectar hijos con q
             (q->h_der)->padre = q;
         }
         if(q->h_izq !=NULL){
             (q->h_izq)->padre = q;
         }
-        if(p->h_der != NULL){
+        if(p->h_der != NULL){             //Conectar hijos con q
             (p->h_der)->padre = p;
         }
         if(p->h_izq !=NULL){
             (p->h_izq)->padre = p;
         }
-    }
 }
 /////////////////////////////////////
