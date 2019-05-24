@@ -171,12 +171,12 @@ void arbol::borrar1(nodo *p){                                         //Borrar n
             delete p1;
         }
         else if(p1->h_izq == NULL){
-            (p1->h_izq)->padre = NULL;
-            raiz = p1->h_izq;
-        }
-        else if(p1->h_der== NULL){
             (p1->h_der)->padre = NULL;
             raiz = p1->h_der;
+        }
+        else if(p1->h_der== NULL){
+            (p1->h_izq)->padre = NULL;
+            raiz = p1->h_izq;
         }
     }
     else if(como == H_DER){
@@ -208,39 +208,28 @@ void arbol::borrar1(nodo *p){                                         //Borrar n
 
 
     //Ahora eliminamos el nodo de la lista ordenada doblemente ligada
-    if(como == RAIZ){
-        if(p1->siguiente == NULL && p1->anterior == NULL){
+    if(p1 == principio){
+        if(principio == Final){
             principio = NULL;
             Final = NULL;
         }
+        else{
+            principio = principio->siguiente;
+            principio->anterior = NULL;
+        }
+    }
+    else if(p1 == Final){
 
+        p1->anterior->siguiente = NULL;
+        Final = p1->anterior;
     }
-    else if(como == H_DER){
-        if(p1->siguiente == NULL){
-            (p1->anterior)->siguiente = NULL;
-            Final = p1->anterior;
-            p1->anterior = NULL;
-        }
-        else{
-            (p1->anterior)->siguiente = p1->siguiente;
-            (p1->siguiente)->anterior = p1->anterior;
-            p1->anterior = NULL;
-            p1->siguiente = NULL;
-        }
-    }
+    //AHORA CASO GENERAL (NO ESTA EN FINAL NI PRINCIPIO)
     else{
-        if(p1->anterior == NULL){
-            (p1->siguiente)->anterior = NULL;
-            principio = p1->siguiente;
-            p1->siguiente = NULL;
-        }
-        else{
-            (p1->anterior)->siguiente = p1->siguiente;
-            (p1->siguiente)->anterior = p1->anterior;
-            p1->siguiente = NULL;
-            p1->anterior = NULL;
-        }
+        p1->anterior->siguiente = p1->siguiente;
+        p1->siguiente->anterior = p1->anterior;
     }
+
+
     delete p1;
     return;
 }
