@@ -12,8 +12,7 @@ struct nodo{                                                    //Nodos del arbo
 };
 ///////////////////////////////////
 class arbol{
-    nodo *raiz, *principio, *Final;
-    nodo *donde;
+    nodo *raiz, *principio, *Final, *donde;
     enum _encontrado{SI, NO}; enum _encontrado encontrado;
     enum _como{VACIO, H_DER, H_IZQ, RAIZ}; enum _como como;     //Variable para saber de que manera está colgando el nodo
                                                                 //en el arbol

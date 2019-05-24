@@ -414,8 +414,6 @@ int monton::sacar(){
 
         intercambiar(principio, Final);
 
-
-
         p = Final;
         valor = p->valor;
 
