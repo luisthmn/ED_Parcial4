@@ -11,7 +11,6 @@ monton::monton(){
     principio = NULL;
     Final = NULL;
     donde = NULL;
-    encontrado = NO;
 }
 //------------------------------------------
 monton::~monton(){
@@ -28,7 +27,6 @@ monton::~monton(){
         principio = NULL;
         Final = NULL;
         donde = NULL;
-        encontrado = NO;
 }
 //-------------------------------------------------
 void monton::agregar(int a){

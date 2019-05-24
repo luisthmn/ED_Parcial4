@@ -10,8 +10,6 @@ struct nodo{
 class monton{
 
     nodo *raiz, *principio, *Final, *donde;
-    enum _encontrado{SI, NO};
-    enum _encontrado encontrado;
     enum _como{H_DER, H_IZQ};
     enum _como como;
 
