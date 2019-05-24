@@ -35,11 +35,11 @@
 	<iostream>
 	"clases.cpp"
 
-1558623452 source:c:\users\luis\desktop\git_hub\github_ed_parcial4\arboles_binarios\clases.cpp
+1558690135 source:c:\users\luis\desktop\git_hub\github_ed_parcial4\arboles_binarios\clases.cpp
 	<cstdlib>
 	<iostream>
 
-1558646141 source:c:\users\luis\desktop\git_hub\github_ed_parcial4\arboles_binarios\funciones.cpp
+1558728157 source:c:\users\luis\desktop\git_hub\github_ed_parcial4\arboles_binarios\funciones.cpp
 	<cstdlib>
 	<iostream>
 	"clases.cpp"
@@ -48,7 +48,7 @@
 	<cstdlib>
 	<iostream>
 
-1558644216 source:c:\users\luis\desktop\git_hub\github_ed_parcial4\arboles_binarios\main.cpp
+1558725893 source:c:\users\luis\desktop\git_hub\github_ed_parcial4\arboles_binarios\main.cpp
 	<cstdlib>
 	<iostream>
 	"clases.cpp"

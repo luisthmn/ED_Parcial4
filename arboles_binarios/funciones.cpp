@@ -168,6 +168,7 @@ void arbol::borrar1(nodo *p){                                         //Borrar n
     if(como==RAIZ){
 
         if(p1->h_der == NULL && p1->h_izq == NULL){
+            raiz = NULL;
             delete p1;
         }
         else if(p1->h_izq == NULL){
@@ -228,7 +229,6 @@ void arbol::borrar1(nodo *p){                                         //Borrar n
         p1->anterior->siguiente = p1->siguiente;
         p1->siguiente->anterior = p1->anterior;
     }
-
 
     delete p1;
     return;

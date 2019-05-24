@@ -10,15 +10,15 @@ int main()
 
     arbol a;
 
-    a.agregar(2);
+    a.agregar(10);
     a.agregar(3);
     a.agregar(4);
     a.agregar(8);
     a.agregar(12);
-  //  a.agregar(15);
+    a.agregar(15);
     a.pintar();
     cout << endl << endl << endl << endl;
-    a.borrar(2);
+    a.borrar(8);
     a.pintar();
 
     system("pause");
