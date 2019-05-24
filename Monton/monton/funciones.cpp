@@ -38,6 +38,8 @@ void monton::agregar(int a){
     p->valor = a;
     p->h_izq = NULL;
     p ->h_der = NULL;
+    p->siguiente = NULL;
+    p->anterior = NULL;
 
     if(raiz == NULL){
         raiz = p;
@@ -45,6 +47,7 @@ void monton::agregar(int a){
         donde = p;
         Final = p;
         como = H_IZQ;
+        p->padre = NULL;
         return;
     }
     else if(como == H_IZQ){
@@ -93,12 +96,13 @@ void monton::bajar(nodo *p){
                 else{
                     q = p->h_izq;
                 }
-                if(p->valor < q->valor){
-                    return;
-                }
-                else{
-                    intercambiar(p,q);
-                }
+            }
+
+            if(p->valor < q->valor){
+                return;
+            }
+            else{
+                intercambiar(p,q);
             }
         }
         return;
@@ -108,49 +112,44 @@ void monton::intercambiar(nodo *p, nodo *q){
 
     nodo *r;
 
-    //Codigo intercambiar del arbol binario
     if(q->padre == p){          //Caso en el que los nodos están juntos
         if(p->h_der == q){
+
+            r = p->padre;
+            p->padre = q->padre;
+            q->padre = r;
+
+            r = p->h_der;
+            p->h_der = q->h_der;
+            q->h_der = r;
+
+            r = p->h_izq;
+            p->h_izq = q->h_izq;
+            q->h_izq = r;
+
             q->h_der = p;
             p->padre = q;
+
         }
         else{
+
+            r = p->padre;
+            p->padre = q->padre;
+            q->padre = r;
+
+            r = p->h_der;
+            p->h_der = q->h_der;
+            q->h_der = r;
+
+            r = p->h_izq;
+            p->h_izq = q->h_izq;
+            q->h_izq = r;
+
             q->h_izq = p;
             p->padre = q;
         }
-        if(q->padre == NULL){
-            raiz = q;
-        }
-    }
-    else if(p->padre == q){     //Otro caso en el que los nodos están juntos
-        if(q->h_der == p){
-            p->h_der = q;
-            q->padre = p;
-        }
-        else{
-            p->h_izq = q;
-            q->padre = p;
-        }
-        if(p->padre == NULL){
-            raiz = p;
-        }
-    }
-    else{                   //Los casos en los que los nodos no están juntos
-        nodo *r;
 
-        r = p->padre;
-        q->padre = r;
-        donde = p->padre;
-
-        r = p->h_der;
-        p->h_der = q->h_der;
-        q->h_der = r;
-
-        r = p->h_izq;
-        p->h_izq = q->h_izq;
-        q->h_izq = r;
-
-        if(q->padre == NULL){
+        if(q->padre == NULL){   //Conectar nodo q con su padre
             raiz = q;
         }
         else{
@@ -161,32 +160,168 @@ void monton::intercambiar(nodo *p, nodo *q){
                 (q->padre)->h_izq = q;
             }
         }
-        if(p->padre == NULL){
+        if(p->padre == NULL){//Conectar nodo p con su padre
+            raiz = p;
+        }
+       /* else{
+            if((p->padre)->h_der == p){
+                (p->padre)->h_der = p;
+             //   como = H_DER;
+            }
+            else{
+                (p->padre)->h_izq = p;
+              //  como = H_IZQ;
+            }
+        }*/
+        /*if(q->padre == NULL){
+            raiz = q;
+        }*/
+    }
+    else if(p->padre == q){     //Otro caso en el que los nodos están juntos
+        if(q->h_der == p){
+
+            r = p->padre;
+            p->padre = q->padre;
+            q->padre = r;
+
+            r = p->h_der;
+            p->h_der = q->h_der;
+            q->h_der = r;
+
+            r = p->h_izq;
+            p->h_izq = q->h_izq;
+            q->h_izq = r;
+
+            p->h_der = q;
+            q->padre = p;
+        }
+        else{
+
+            r = p->padre;
+            p->padre = q->padre;
+            q->padre = r;
+
+            r = p->h_der;
+            p->h_der = q->h_der;
+            q->h_der = r;
+
+            r = p->h_izq;
+            p->h_izq = q->h_izq;
+            q->h_izq = r;
+
+
+            p->h_izq = q;
+            q->padre = p;
+        }
+
+        if(q->padre == NULL){   //Conectar nodo q con su padre
+            raiz = q;
+        }
+        /*else{
+            if((q->padre)->h_der == q){
+                (q->padre)->h_der = q;
+            }
+            else{
+                (q->padre)->h_izq = q;
+            }
+        }*/
+        if(p->padre == NULL){                //Conectar nodo p con su padre
             raiz = p;
         }
         else{
             if((p->padre)->h_der == q){
                 (p->padre)->h_der = p;
-                como = H_DER;
+             //   como = H_DER;
             }
             else{
                 (p->padre)->h_izq = p;
-                como = H_IZQ;
+              //  como = H_IZQ;
             }
         }
-        if(q->h_der !=NULL){
+      /*  if(p->padre == NULL){
+            raiz = p;
+        }*/
+    }
+    else{                   //Los casos en los que los nodos no están juntos
+        nodo *r;
+
+        r = p->padre;
+        p->padre = q->padre;
+        q->padre = r;
+
+        r = p->h_der;
+        p->h_der = q->h_der;
+        q->h_der = r;
+
+        r = p->h_izq;
+        p->h_izq = q->h_izq;
+        q->h_izq = r;
+
+        if(q->padre == NULL){   //Conectar nodo q con su padre
+            raiz = q;
+        }
+        else{
+            if((q->padre)->h_der == p){
+                (q->padre)->h_der = q;
+            }
+            else{
+                (q->padre)->h_izq = q;
+            }
+        }
+        if(p->padre == NULL){                //Conectar nodo p con su padre
+            raiz = p;
+        }
+        else{
+            if((p->padre)->h_der == q){
+                (p->padre)->h_der = p;
+             //   como = H_DER;
+            }
+            else{
+                (p->padre)->h_izq = p;
+              //  como = H_IZQ;
+            }
+        }
+
+    }
+
+       /* if(q->padre == NULL){   //Conectar nodo q con su padre
+            raiz = q;
+        }
+        else{
+            if((q->padre)->h_der == p){
+                (q->padre)->h_der = q;
+            }
+            else{
+                (q->padre)->h_izq = p;
+            }
+        }
+        if(p->padre == NULL){                //Conectar nodo p con su padre
+            raiz = p;
+        }
+        else{
+            if((p->padre)->h_der == q){
+                (p->padre)->h_der = p;
+             //   como = H_DER;
+            }
+            else{
+                (p->padre)->h_izq = p;
+              //  como = H_IZQ;
+            }
+        }*/
+
+
+        if(q->h_der !=NULL){                //Conectar hijos con q
             (q->h_der)->padre = q;
         }
         if(q->h_izq !=NULL){
             (q->h_izq)->padre = q;
         }
-        if(p->h_der != NULL){
+        if(p->h_der != NULL){             //Conectar hijos con q
             (p->h_der)->padre = p;
         }
         if(p->h_izq !=NULL){
             (p->h_izq)->padre = p;
         }
-    }
     //Fin de codigo intercambiar de arbol binario
 
     //Intercambiamos ahora en la lista doblemente ligada
@@ -196,7 +331,7 @@ void monton::intercambiar(nodo *p, nodo *q){
         q->anterior = p;
         r = p->siguiente;
         q->siguiente = r;
-        p->siguiente = p;
+        p->siguiente = q;
 
         //Checamos los vecinos
         if(p->anterior == NULL){
@@ -214,11 +349,65 @@ void monton::intercambiar(nodo *p, nodo *q){
     }
     else if(q->anterior == p){
         //Otro Caso en el que están pegados
+        r = p->anterior;
+        q->anterior = r;
+        p->anterior = q;
+        r = q->siguiente;
+        p->siguiente = r;
+        q->siguiente = p;
+
+        //Checamos los vecinos
+        if(q->anterior == NULL){
+            principio = q;
+        }
+        else{
+            (q->anterior)->siguiente = q;
+        }
+
+        if(p->siguiente==NULL){
+            Final = p;
+        }
+        else{
+            (p->siguiente)->anterior = p;
+        }
     }
     else{
         //Caso general: Los nodos no están juntos
-    }
+        nodo *r;
+        r = p->siguiente;
+        p->siguiente = q->siguiente;
+        q->siguiente = r;
+        r = p->anterior;
+        p->anterior = q->anterior;
+        q->anterior = r;
 
+        if(q->anterior == NULL){            //CAMBIAR VECINOS DE P EN LA LISTA DOBLE
+            principio = q;
+        }
+        else{
+            q->anterior->siguiente =q;
+        }
+        if(q->siguiente == NULL){
+            Final = q;
+        }
+        else{
+            q->siguiente->anterior = q;
+        }
+
+
+        if(p->anterior == NULL){            //CAMBIAR VECINOS DE P EN LA LISTA DOBLE
+            principio = p;
+        }
+        else{
+            p->anterior->siguiente = p;
+        }
+        if(p->siguiente == NULL){
+            Final = p;
+        }
+        else{
+            p->siguiente->anterior = p;
+        }
+    }
 
     //Finalmente actualizamos la variable donde
     if(donde == p){
@@ -235,10 +424,13 @@ void monton::intercambiar(nodo *p, nodo *q){
 void monton::pintar(){
 
     nodo *p;
-    p = raiz;
+    p = principio;
 
     while(p){
         cout << endl << "Nodo: " << p->valor << endl;
+        cout << "Su papa es: ";
+        if(p->padre==NULL) cout << "NULL" << endl;
+        else cout << p->padre->valor<<endl;
         cout << "Hijo izquierdo: ";
         if(p->h_izq!=NULL) cout << p->h_izq->valor;
         else cout << "NULL";
@@ -256,7 +448,7 @@ int monton::sacar(){
     nodo *p;
 
     int valor = 0;
-    if(raiz == NULL) return 0;
+    if(raiz == NULL) return (999);
 
     if(principio == Final){
 
@@ -272,24 +464,30 @@ int monton::sacar(){
     else{
 
         intercambiar(principio, Final);
+
+
+
         p = Final;
+        valor = p->valor;
 
         //Desconectamos del arbol
-        if(como ==H_DER){
-            donde->h_izq=NULL;
+        if(p->padre->h_der == p){
+            p->padre->h_der = NULL;
             donde = donde->anterior;
         }
-        if(como == H_IZQ){
-            donde ->h_der = NULL;
+        if(p->padre->h_izq == p){
+            p->padre->h_izq = NULL;
         }
         //Terminamos de desconectar del arbol
 
         //FALTA DESCONECTAR DE LA LISTA LIGADA
-        anterior ->siguiente = NULL;
-        Final = anterior;
+        Final = p->anterior;
+        p->anterior ->siguiente = NULL;
 
 
         delete p;
+
+        p = raiz;
         bajar(p);
         return valor;
     }
