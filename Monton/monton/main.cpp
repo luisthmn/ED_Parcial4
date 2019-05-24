@@ -36,33 +36,8 @@ int main()
     for(int i = 0 ; i < 20 ; i++){
         cout << "BORRE EL NODO: " << a.sacar() << endl;
         a.pintar();
-
-        cout << "-------------------------------------------------" << endl;
+        cout  << endl;
     }
-
-
-
-   // a.agregar(100);
-  //  a.agregar(12);
-  /*  a.agregar(71);
-    a.agregar(76);
-    a.agregar(17);
-    a.agregar(29);
-    a.agregar(13);
-    a.agregar(96);
-    a.agregar(91);
-    a.agregar(92);
-    a.agregar(78);
-    a.agregar(36);
-    a.agregar(83);
-    a.agregar(80);
-    a.agregar(84);
-    a.agregar(27);
-    a.agregar(31);
-    a.agregar(97);*/
-
-
-
     system("pause");
     return 0;
 }

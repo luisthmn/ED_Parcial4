@@ -163,19 +163,7 @@ void monton::intercambiar(nodo *p, nodo *q){
         if(p->padre == NULL){//Conectar nodo p con su padre
             raiz = p;
         }
-       /* else{
-            if((p->padre)->h_der == p){
-                (p->padre)->h_der = p;
-             //   como = H_DER;
-            }
-            else{
-                (p->padre)->h_izq = p;
-              //  como = H_IZQ;
-            }
-        }*/
-        /*if(q->padre == NULL){
-            raiz = q;
-        }*/
+
     }
     else if(p->padre == q){     //Otro caso en el que los nodos están juntos
         if(q->h_der == p){
@@ -217,30 +205,19 @@ void monton::intercambiar(nodo *p, nodo *q){
         if(q->padre == NULL){   //Conectar nodo q con su padre
             raiz = q;
         }
-        /*else{
-            if((q->padre)->h_der == q){
-                (q->padre)->h_der = q;
-            }
-            else{
-                (q->padre)->h_izq = q;
-            }
-        }*/
+
         if(p->padre == NULL){                //Conectar nodo p con su padre
             raiz = p;
         }
         else{
             if((p->padre)->h_der == q){
                 (p->padre)->h_der = p;
-             //   como = H_DER;
             }
             else{
                 (p->padre)->h_izq = p;
-              //  como = H_IZQ;
             }
         }
-      /*  if(p->padre == NULL){
-            raiz = p;
-        }*/
+
     }
     else{                   //Los casos en los que los nodos no están juntos
         nodo *r;
@@ -274,41 +251,13 @@ void monton::intercambiar(nodo *p, nodo *q){
         else{
             if((p->padre)->h_der == q){
                 (p->padre)->h_der = p;
-             //   como = H_DER;
             }
             else{
                 (p->padre)->h_izq = p;
-              //  como = H_IZQ;
             }
         }
 
     }
-
-       /* if(q->padre == NULL){   //Conectar nodo q con su padre
-            raiz = q;
-        }
-        else{
-            if((q->padre)->h_der == p){
-                (q->padre)->h_der = q;
-            }
-            else{
-                (q->padre)->h_izq = p;
-            }
-        }
-        if(p->padre == NULL){                //Conectar nodo p con su padre
-            raiz = p;
-        }
-        else{
-            if((p->padre)->h_der == q){
-                (p->padre)->h_der = p;
-             //   como = H_DER;
-            }
-            else{
-                (p->padre)->h_izq = p;
-              //  como = H_IZQ;
-            }
-        }*/
-
 
         if(q->h_der !=NULL){                //Conectar hijos con q
             (q->h_der)->padre = q;
