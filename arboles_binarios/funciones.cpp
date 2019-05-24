@@ -123,7 +123,7 @@ int arbol::agregar(int a){
     else{
         donde -> h_izq = p;
         p -> padre = donde;
-    }//YAESTAENELARBOL
+    }                           //Nodo colocado en el arbol
 
     //LISTA ORDENADA
     if(como == RAIZ){
@@ -213,16 +213,7 @@ void arbol::borrar1(nodo *p){                                         //Borrar n
             principio = NULL;
             Final = NULL;
         }
-     /*   else if(p1->siguiente == NULL && p1->anterior !=NULL){
-            (p1->anterior)->siguiente = NULL;
-            Final = p1->anterior;
-          //  p1->anterior = NULL;
-        }
-        else if(p1->siguiente != NULL && p1->anterior == NULL){
-            (p1->siguiente)->anterior = NULL;
-            principio = p1->siguiente;
-          //  p1->siguiente = NULL;
-        }*/
+
     }
     else if(como == H_DER){
         if(p1->siguiente == NULL){
@@ -326,9 +317,7 @@ void arbol::intercambiar(nodo *p, nodo *q){
             q->h_izq = p;
             p->padre = q;
         }
-        /*if(q->padre == NULL){
-            raiz = q;
-        }*/
+
     }
     else if(p->padre == q){     //Otro caso en el que los nodos están juntos
         if(q->h_der == p){
@@ -366,9 +355,7 @@ void arbol::intercambiar(nodo *p, nodo *q){
             p->h_izq = q;
             q->padre = p;
         }
-      /*  if(p->padre == NULL){
-            raiz = p;
-        }*/
+
     }
     else{                   //Los casos en los que los nodos no están juntos
         nodo *r;
